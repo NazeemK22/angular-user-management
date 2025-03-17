@@ -1,0 +1,81 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-md-9"></div>
+    <div class="col-md-3">
+      <button (click)="logout()" class="logout-btn">Logout</button>
+    </div>
+  </div>
+  
+  <div class="row mt-5">
+    <div class="col-md-7">
+      <h2>User List</h2>
+      <input type="text" [ngModel]="searchTerm()" (ngModelChange)="searchTerm.set($event)" placeholder="Search users..." />
+    
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Website</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of searchUsers()" (click)="selectUser(user)" appHighlight>
+            <td>{{ user.id }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.phone }}</td>
+            <td>{{ user.website }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pagination">
+        <button (click)="changePage(1)" [disabled]="currentPage() === 1">First</button>
+        <button (click)="changePage(currentPage() - 1)" [disabled]="currentPage() === 1">❮</button>
+    
+        <button 
+          *ngFor="let page of totalPages()" 
+          (click)="changePage(page)" 
+          [class.active]="currentPage() === page">
+          {{ page }}
+        </button>
+    
+        <button (click)="changePage(currentPage() + 1)" [disabled]="currentPage() === totalPages().length">❯</button>
+        <button (click)="changePage(totalPages().length)" [disabled]="currentPage() === totalPages().length">Last</button>
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div *ngIf="selectedUser() as user">
+        <h3>User Details</h3>
+        <form>
+          <label>ID: </label>
+          <input type="text" [ngModel]="user.id" disabled readonly name="id"/><br />
+          <label>Name: </label>
+          <input type="text" [ngModel]="user.name" disabled name="name"/><br />
+          <label>Email: </label>
+          <input type="text" [ngModel]="user.email" disabled name="email"/><br />
+          <label>Phone: </label>
+          <input type="text" [ngModel]="user.phone" disabled name="phone"/>
+          <label>Website: </label>
+          <input type="text" [ngModel]="user.website" disabled name="website"/><br />
+          <label>Address: </label>
+          <div class="row">
+            <div class="col-md-6">
+              <input type="text" [ngModel]="user.address.suite" disabled name="suite"/>
+              <input type="text" [ngModel]="user.address.street" disabled name="street"/>
+            </div>
+            <div class="col-md-6">
+              <input type="text" [ngModel]="user.address.city" disabled name="city"/>
+              <input type="text" [ngModel]="user.address.zipcode" disabled name="zipcode"/>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>  

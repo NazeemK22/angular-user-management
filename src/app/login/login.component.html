@@ -1,0 +1,22 @@
+<div class="parent">
+  <div class="container-login">
+    <div class="signin-form">
+      <h2>Login</h2>
+      <form (ngSubmit)="login()">
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input 
+            id="username" 
+            type="text" 
+            [ngModel]="username()"
+            (ngModelChange)="username.set($event)" 
+            name="username" 
+            class="form-control" 
+            placeholder="Enter username" />
+        </div>
+        <button type="submit" class="btn btn-success mt-3" [disabled]="!username">Login</button>
+      </form>
+    </div>
+  </div>
+</div>
+
